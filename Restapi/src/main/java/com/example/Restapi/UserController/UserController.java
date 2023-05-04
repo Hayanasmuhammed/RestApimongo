@@ -38,8 +38,8 @@ public class UserController {
     }
     @DeleteMapping("/{userId}")
     public String delUser(@PathVariable String userId) {
-    	userService.del(userId);
-    	return "deleted";
+    	String res= userService.del(userId);
+    	return res;
     	
     }
     @PutMapping("/addUser/{userId}")

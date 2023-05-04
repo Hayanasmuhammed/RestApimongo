@@ -43,21 +43,34 @@ public class UserService {
 		return res;
 	}
 
-	public void del(String userId) {
-		Optional<User> user = userRepo.findById(userId);
-		User ur = user.get();
-		ur.setDelete(LocalDateTime.now());
-		userRepo.save(ur);
-	}
+	public String del(String userId) {
+      Optional   <User> user = userRepo.findById(userId);
+		if (!user.isPresent()) {
+			
+			return "not present";
+		}
 
-	public void update(String ID,UserReq req) {
+		else {
+            User ur=user.get();
+            if(ur.getDelete()!=null) {
+            	return "already deletd";
+            }
+            else {
+			ur.setDelete(LocalDateTime.now());
+			userRepo.save(ur);
+			return "deleted";}
+		}
+	}
+		
+	
+	public void update(String ID, UserReq req) {
 		Optional<User> user = userRepo.findById(ID);
 		User ur = user.get();
 		ur.setName(req.getName());
 		ur.setRollNumber(req.getRollNumber());
 		userRepo.save(ur);
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
